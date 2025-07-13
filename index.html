@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ram Teja Photography | South Indian Wedding Stories</title>
+    <style>
+        /* CSS is included in the <style> tag */
+        :root {
+            --primary-color: #8D493A; /* A sophisticated, earthy brown */
+            --secondary-color: #FDF5E6; /* A warm off-white, like parchment */
+            --text-color: #333333;
+            --light-gray: #f4f4f4;
+            --dark-gray: #555;
+            --white: #ffffff;
+        }
+
+        /* General Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Garamond', 'Times New Roman', serif;
+            font-weight: 300;
+            color: var(--primary-color);
+        }
+
+        /* Header & Navigation */
+        .main-header {
+            background: var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .main-nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+        }
+
+        .main-nav a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background-image: url('img/hero-image.jpg'); /* **IMPORTANT: Add a hero image here** */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 0;
+            color: var(--white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            font-weight: 200;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 60px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .content-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+
+        /* About Section */
+        #about .container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        #about img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--white);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Gallery Section */
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            background: none;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Lightbox (Slideshow) */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .lightbox.show {
+            display: flex; /* Shown with JS */
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            justify-content: safe;
+            align-items: center;
+        }
+
+        .lightbox-content img {
+            /*
+              This is the definitive fix. These properties ensure that the image scales
+              down to fit within the container (.lightbox-content) while maintaining its
+              original aspect ratio, preventing any cropping or distortion.
+            */
+            max-width: 90vw;
+            max-height: 90vh;
+            width:fit-content;
+            height: fit-content;
+            object-fit: contain;
+        }
+
+        .lightbox-close, .lightbox-prev, .lightbox-next {
+            position: absolute;
+            color: var(--white);
+            font-size: 2em;
+            cursor: pointer;
+            user-select: none;
+            text-shadow: 0 0 5px black;
+        }
+
+        .lightbox-close {
+            top: 20px;
+            right: 30px;
+        }
+
+        .lightbox-prev {
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-next {
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        /* Contact Section */
+        #contact p {
+            text-align: center;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+        .contact-info {
+            text-align: center;
+        }
+        .contact-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header .container {
+                flex-direction: column;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 10px;
+            }
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            #about .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">Ram Teja</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About Me</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Weaving Stories of Love & Tradition</h1>
+            <p>Authentic South Indian Wedding Photography in Hyderabad</p>
+        </div>
+    </section>
+
+    <main>
+        <section id="about" class="content-section">
+            <div class="container">
+                <img src="img/your-profile-photo.jpg" alt="A photo of [Your Name]"> <div>
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">More Than a Photographer, A Storyteller</h2>
+                    <p>Namaste, I'm <strong>[Your Name]</strong>. My journey into photography began not just with a camera, but with a deep appreciation for the rich tapestry of stories that unfold during a wedding. Growing up in Hyderabad, I was always mesmerized by the intricate rituals and profound moments of South Indian ceremonies.</p>
+                    <p>My approach is a blend of documentary-style candids and fine-art portraiture. I pride myself on knowing the flow of a Telugu wedding—from the playful energy of the <em>Pellikuthuru</em> ceremony and the solemnity of the <em>Kanyadaanam</em> to the joyous shower of the <em>Talambralu</em>. I aim to be an unobtrusive observer, capturing the unseen glances, the joyful tears, and the genuine laughter that make each wedding unique.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="content-section">
+            <div class="container">
+                <h2 class="section-title">My Work</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Have a look at my work</button>
+                    <!-- <button class="filter-btn" data-filter="preparations">Preparations</button> -->
+                    <!-- <button class="filter-btn" data-filter="ceremony">Ceremony</button> -->
+                    <!-- <button class="filter-btn" data-filter="portraits">Portraits</button>
+                    <button class="filter-btn" data-filter="candids">Candids</button> -->
+                </div>
+                <div class="gallery-grid">
+                    </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section">
+            <div class="container">
+                <h2 class="section-title">Let's Connect</h2>
+                <p>I am excited about the possibility of joining your team and contributing to the beautiful wedding stories you create. Please feel free to reach out.</p>
+                <div class="contact-info">
+                    <p><strong>Email:</strong> <a href="mailto:ramte6638.com">[your.email@example.com]</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+917032724055">+91 00000 00000</a></p>
+                    <p><strong>Location:</strong> Hyderabad, Telangana</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 Ram Teja Photography. All Rights Reserved.</p>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-prev">&#10094;</span>
+        <span class="lightbox-next">&#10095;</span>
+        <div class="lightbox-content">
+            <img src="" alt="Lightbox image" id="lightbox-img">
+        </div>
+    </div>
+
+<script>
+// JavaScript is included in the <script> tag
+
+document.addEventListener('DOMContentLoaded', () => {
+
+
+    const singleCategoryName = 'Have a look at my work';
+    // --- Gallery Data ---
+    // **IMPORTANT**: Add your image file names here.
+    // Make sure the paths match your folder structure: 'img/category/filename.jpg'
+    const images = [
+        { src: 'images/combined/M001.jpg', category: 'Have a look at my work' }, // Corrected Google Drive link for M001
+        { src: 'images/combined/M002.jpg', category: 'Have a look at my work' },
+        { src: 'images/combined/M003.jpg', category: 'Have a look at my work' },
+        { src: 'images/combined/M004.jpg', category: 'Have a look at my work' },
+        { src: 'images/combined/M005.jpg', category: 'Have a look at my work' },
+        { src: 'images/combined/M006.jpg', category: 'Have a look at my work' },
+        { src: 'images/combined/M007.jpg', category: 'Have a look at my work' },
+        //{ src: 'images/combined/M001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/M001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/M001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/M001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/M001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/M001', category: 'Have a look at my work'},
+
+        // Suma wedding.
+        { src: 'images/combined/S001.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S002.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S003.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S004.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S005.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S006.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S007.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S008.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S009.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S010.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/S011.jpg', category: 'Have a look at my work'},
+       // { src: 'images/combined/S001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/S001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/S001', category: 'Have a look at my work'},
+       // { src: 'images/combined/S001', category: 'Have a look at my work'},
+       // { src: 'images/combined/S001', category: 'Have a look at my work'},
+       // { src: 'images/combined/S001', category: 'Have a look at my work'},
+       // { src: 'images/combined/S001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/S001', category: 'Have a look at my work'},
+
+
+
+        // Buggalu akka wedding.
+        { src: 'images/combined/B001.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/B002.jpg', category: 'Have a look at my work'},
+        // { src: 'images/combined/B003.jpg', category: 'Have a look at my work'},
+        // { src: 'images/combined/B004.jpg', category: 'Have a look at my work'},
+        // { src: 'images/combined/B005.jpg', category: 'Have a look at my work'},
+        // { src: 'images/combined/B006.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/B007.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/B008.jpg', category: 'Have a look at my work'},
+        // { src: 'images/combined/B009.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/B010.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/B011.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/B012.jpg', category: 'Have a look at my work'},
+        //{ src: 'images/combined/B001', category: 'Have a look at my work'},
+       // { src: 'images/combined/B001', category: 'Have a look at my work'},
+       // { src: 'images/combined/B001', category: 'Have a look at my work'},
+       // { src: 'images/combined/B001', category: 'Have a look at my work'},
+       // { src: 'images/combined/B001', category: 'Have a look at my work'},
+       // { src: 'images/combined/B001', category: 'Have a look at my work'},
+       // { src: 'images/combined/B001', category: 'Have a look at my work'},
+       // { src: 'images/combined/B001', category: 'Have a look at my work'},
+       // { src: 'images/combined/B001', category: 'Have a look at my work'},
+
+        // Jeans
+        { src: 'images/combined/J001.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J002.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J003.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J004.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J005.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J006.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J007.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J008.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J009.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J010.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J011.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J012.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J013.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J014.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J015.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J016.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J017.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J018.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J019.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J020.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/J021.jpg', category: 'Have a look at my work'},
+       // { src: 'images/combined/J022', category: 'Have a look at my work'},
+       // { src: 'images/combined/J023', category: 'Have a look at my work'},
+       // { src: 'images/combined/J003', category: 'Have a look at my work'},
+       // { src: 'images/combined/J003', category: 'Have a look at my work'},
+
+
+
+        // Others
+        { src: 'images/combined/L001.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L002.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L003.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L004.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L005.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L006.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L007.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L008.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L009.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L010.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L011.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L012.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L013.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L014.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L015.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L016.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L017.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/L018.jpg', category: 'Have a look at my work'},
+       // { src: 'images/combined/L001', category: 'Have a look at my work'},
+       // { src: 'images/combined/L001', category: 'Have a look at my work'},
+       // { src: 'images/combined/L001', category: 'Have a look at my work'},
+        //{ src: 'images/combined/L001', category: 'Have a look at my work'},
+       // { src: 'images/combined/L001', category: 'Have a look at my work'},
+
+
+        
+        { src: 'images/combined/C001.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/C002.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/C003.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/C004.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/C005.jpg', category: 'Have a look at my work'},
+        { src: 'images/combined/C006.jpg', category: 'Have a look at my work'},
+
+        // { src: 'images/combined/001.jpg', category: 'Have a look at my work'}
+
+
+        // Others
+        // { src: 'img/portraits/portrait-1.jpg', category: 'portraits' },
+        // { src: 'img/portraits/portrait-2.jpg', category: 'portraits' },
+        // { src: 'img/portraits/portrait-3.jpg', category: 'portraits' },
+        // { src: 'img/candids/candid-1.jpg', category: 'candids' },
+        // { src: 'img/candids/candid-2.jpg', category: 'candids' },
+        // { src: 'img/candids/candid-3.jpg', category: 'candids' },
+        // Add as many images as you like...
+    ];
+
+    const galleryGrid = document.querySelector('.gallery-grid');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+
+    let currentImageIndex;
+//    let currentFilter = 'all';
+    let currentFilter = singleCategoryName;
+
+    // --- Populate Gallery ---
+    function populateGallery(filter = singleCategoryName /*'all'*/) {
+        galleryGrid.innerHTML = '';
+        const filteredImages = (filter === singleCategoryName /*'all'*/) 
+            ? images 
+            : images.filter(img => img.category === filter);
+
+        filteredImages.forEach((image, index) => {
+            const item = document.createElement('div');
+            item.classList.add('gallery-item');
+            item.dataset.category = image.category;
+
+            const imgElement = document.createElement('img');
+            imgElement.src = image.src;
+            imgElement.alt = `${image.category} image ${index + 1}`;
+            imgElement.loading = 'lazy'; // Improves performance
+
+            item.appendChild(imgElement);
+            galleryGrid.appendChild(item);
+
+            item.addEventListener('click', () => {
+                openLightbox(filteredImages, index);
+            });
+        });
+    }
+
+    // --- Lightbox Functionality ---
+    function openLightbox(sourceArray, index) {
+        currentImageIndex = index;
+        lightbox.classList.add('show');
+        updateLightboxImage();
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('show');
+    }
+
+    function updateLightboxImage() {
+        lightboxImg.src = getCurrentFilteredImages()[currentImageIndex].src;
+    }
+    
+    function showPrevImage() {
+        const totalImages = getCurrentFilteredImages().length;
+        currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+        updateLightboxImage();
+    }
+
+    function showNextImage() {
+        const totalImages = getCurrentFilteredImages().length;
+        currentImageIndex = (currentImageIndex + 1) % totalImages;
+        updateLightboxImage();
+    }
+    
+    function getCurrentFilteredImages() {
+        return (currentFilter === singleCategoryName /*'all'*/) 
+            ? images 
+            : images.filter(img => img.category === currentFilter);
+    }
+
+
+    // --- Event Listeners ---
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            currentFilter = button.dataset.filter;
+            populateGallery(currentFilter);
+        });
+    });
+    
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', showPrevImage);
+    nextBtn.addEventListener('click', showNextImage);
+
+    // Keyboard navigation for lightbox
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('show')) {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') showPrevImage();
+            if (e.key === 'ArrowRight') showNextImage();
+        }
+    });
+    
+    // Smooth scrolling for nav links
+    document.querySelectorAll('.main-nav a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+            // Update active link
+            document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+
+    // --- Initial Load ---
+    populateGallery();
+});
+</script>
+
+</body>
+</html>
